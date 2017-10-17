@@ -232,7 +232,7 @@ module Zip
       end
       set_time(@last_mod_date, @last_mod_time)
 
-      @name = io.read(@name_length)
+      @name = io.read(@name_length).force_encoding('UTF-8')
       extra = io.read(@extra_length)
 
       @name.gsub!('\\', '/')
@@ -362,7 +362,7 @@ module Zip
       unpack_c_dir_entry(static_sized_fields_buf)
       check_c_dir_entry_signature
       set_time(@last_mod_date, @last_mod_time)
-      @name = io.read(@name_length).gsub('\\', '/')
+      @name = io.read(@name_length).gsub('\\', '/').force_encoding('UTF-8')
       read_c_dir_extra_field(io)
       @comment = io.read(@comment_length)
       check_c_dir_entry_comment_size
